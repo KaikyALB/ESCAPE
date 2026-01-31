@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
     public bool isSprinting;
 
     public bool isCrouching;
-
+    public bool crouched;
     
     void Start()
     {
@@ -59,6 +59,12 @@ public class Player : MonoBehaviour
         if(isCrouching)
         {
             anim.SetBool("isCrouching", true);
+            rb.transform.position += new Vector3(-0.05f, 0, 0);
+            crouched = true;
+        }
+        if(crouched)
+        {
+            rb.transform.position = new Vector3(0, 0, 0);
         }
     }
 }

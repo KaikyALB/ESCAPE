@@ -208,7 +208,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Hip Hop Dancing
+  m_Name: Idle
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -224,7 +224,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -1957309743605940829, guid: fac59f23779276e4888e7d5c01226ffb, type: 3}
+  m_Motion: {fileID: -203655887218126122, guid: 6893bdbf8c2d1d842b8da1a568976171, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
