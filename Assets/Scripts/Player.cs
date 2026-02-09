@@ -10,6 +10,8 @@ public class Player : MonoBehaviour
     public float startSpeed;
     public float moveSpeed;
     public float maxSpeed;
+    public float crouchHeight = -0.2f;
+    public float standingHeight;
     public bool isSprinting;
 
     public bool isCrouching;
@@ -21,6 +23,7 @@ public class Player : MonoBehaviour
         anim = GetComponent<Animator>();
         collider = GetComponent<CapsuleCollider>();
         moveSpeed = startSpeed;
+        standingHeight = collider.height;
     }
     void Update()
     {
@@ -59,12 +62,12 @@ public class Player : MonoBehaviour
         if(isCrouching)
         {
             anim.SetBool("isCrouching", true);
-            rb.transform.position += new Vector3(-0.05f, 0, 0);
+            collider.height = isCrouching ? crouchHeight : standingHeight;
             crouched = true;
         }
         if(crouched)
         {
-            rb.transform.position = new Vector3(0, 0, 0);
+            
         }
     }
 }
