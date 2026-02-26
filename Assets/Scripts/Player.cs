@@ -28,14 +28,13 @@ public class Player : MonoBehaviour
     void Update()
     {
         Movement();
-        Vector3 Coordinate = transform.position;
     }
     public void Movement()
     {
         //Sets the movement
         Vector3 movement = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
         //Speed to move and Space.World stops the rotation of the player from affecting the world
-        transform.Translate(movement * moveSpeed * Time.deltaTime, Space.World);
+        transform.Translate(movement * moveSpeed * Time.deltaTime);
         anim.SetBool("isWalking", movement.magnitude > 0.01f);
         if(Input.GetKey(KeyCode.LeftShift))
         {
@@ -55,7 +54,7 @@ public class Player : MonoBehaviour
             moveSpeed = startSpeed;
             anim.SetBool("isSprinting", false);
         }
-        if(Input.GetKey(KeyCode.LeftControl))
+        if(Input.GetKey(KeyCode.LeftControl) && !crouched)
         {
             isCrouching = true;
         }
@@ -65,9 +64,11 @@ public class Player : MonoBehaviour
             collider.height = isCrouching ? crouchHeight : standingHeight;
             crouched = true;
         }
-        if(crouched)
+        if(Input.GetKey(KeyCode.LeftControl) && crouched)
         {
-            
+            anim.SetBool("isCrouching", false);
+            collider.height = standingHeight;
+            isCrouching = false;
         }
     }
 }
