@@ -698,6 +698,8 @@ MonoBehaviour:
   crouchHeight: -0.2
   standingHeight: 0
   isSprinting: 0
+  crouchToStandTimer: 1.667
+  standReady: 0
   isCrouching: 0
   crouched: 0
 --- !u!4 &1831424092 stripped
@@ -782,7 +784,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 94c438338a55e8d45a5c24764491ffd8, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -868,6 +870,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3feb02dbdd0ff7a44926ea851c7e5619, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 0
+  walkTimer: 0
+  walkDuration: 5
+  startWalk: 0
   Spotted: 0
 --- !u!4 &2143957963 stripped
 Transform:

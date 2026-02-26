@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.XR;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -13,6 +14,9 @@ public class Player : MonoBehaviour
     public float crouchHeight = -0.2f;
     public float standingHeight;
     public bool isSprinting;
+
+    public float crouchToStandTimer;
+    public bool standReady;
 
     public bool isCrouching;
     public bool crouched;
@@ -64,11 +68,23 @@ public class Player : MonoBehaviour
             collider.height = isCrouching ? crouchHeight : standingHeight;
             crouched = true;
         }
-        if(Input.GetKey(KeyCode.LeftControl) && crouched)
+        if(Input.GetKey(KeyCode.Tab))
         {
             anim.SetBool("isCrouching", false);
             collider.height = standingHeight;
+            crouched = false;
             isCrouching = false;
+            standReady = true;
+        }
+        if(!crouched & standReady)
+        {
+            anim.SetBool("crouchToStand", true);
+            crouchToStandTimer -= Time.deltaTime;
+            if(crouchToStandTimer < 0)
+            {
+                anim.SetBool("crouchToStand", false);
+                standReady = false;
+            }
         }
     }
 }
