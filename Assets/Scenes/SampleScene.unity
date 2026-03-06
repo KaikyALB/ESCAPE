@@ -615,6 +615,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 4275173836228808007, guid: 94c438338a55e8d45a5c24764491ffd8, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 88c37539591b9d94c96da558219f656a, type: 2}
     - target: {fileID: 5866666021909216657, guid: 94c438338a55e8d45a5c24764491ffd8, type: 3}
       propertyPath: m_Controller
       value: 
@@ -694,6 +698,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startSpeed: 7
   moveSpeed: 7
+  crouchSpeed: 4
   maxSpeed: 10
   crouchHeight: -0.2
   standingHeight: 0

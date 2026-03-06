@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.XR;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Player : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class Player : MonoBehaviour
     private CapsuleCollider collider;
     public float startSpeed;
     public float moveSpeed;
+    public float crouchSpeed;
     public float maxSpeed;
     public float crouchHeight = -0.2f;
     public float standingHeight;
@@ -65,18 +67,22 @@ public class Player : MonoBehaviour
         if(isCrouching)
         {
             anim.SetBool("isCrouching", true);
-            collider.height = isCrouching ? crouchHeight : standingHeight;
+            //collider.height = isCrouching ? crouchHeight : standingHeight;
             crouched = true;
+            moveSpeed = crouchSpeed;
+            collider.height = crouchHeight;
         }
-        if(Input.GetKey(KeyCode.Tab))
+
+        if (Input.GetKey(KeyCode.Tab))
         {
             anim.SetBool("isCrouching", false);
+            anim.SetBool("Idle", true);
             collider.height = standingHeight;
             crouched = false;
             isCrouching = false;
-            standReady = true;
+            moveSpeed = startSpeed;
         }
-        if(!crouched & standReady)
+        /*if(!crouched & standReady)
         {
             anim.SetBool("crouchToStand", true);
             crouchToStandTimer -= Time.deltaTime;
@@ -85,6 +91,6 @@ public class Player : MonoBehaviour
                 anim.SetBool("crouchToStand", false);
                 standReady = false;
             }
-        }
+        }*/
     }
 }
