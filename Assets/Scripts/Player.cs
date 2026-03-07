@@ -8,12 +8,12 @@ public class Player : MonoBehaviour
 {
     private Rigidbody rb;
     private Animator anim;
-    private CapsuleCollider collider;
+    public CapsuleCollider col;
     public float startSpeed;
     public float moveSpeed;
     public float crouchSpeed;
     public float maxSpeed;
-    public float crouchHeight = -0.2f;
+    public float crouchHeight = 0.39f;
     public float standingHeight;
     public bool isSprinting;
 
@@ -27,9 +27,9 @@ public class Player : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
-        collider = GetComponent<CapsuleCollider>();
+        col = GetComponent<CapsuleCollider>();
         moveSpeed = startSpeed;
-        standingHeight = collider.height;
+        standingHeight = 0.78f;
     }
     void Update()
     {
@@ -67,17 +67,15 @@ public class Player : MonoBehaviour
         if(isCrouching)
         {
             anim.SetBool("isCrouching", true);
-            //collider.height = isCrouching ? crouchHeight : standingHeight;
             crouched = true;
             moveSpeed = crouchSpeed;
-            collider.height = crouchHeight;
+            col.height = crouchHeight;
         }
 
         if (Input.GetKey(KeyCode.Tab))
         {
             anim.SetBool("isCrouching", false);
-            anim.SetBool("Idle", true);
-            collider.height = standingHeight;
+            col.radius = standingHeight;
             crouched = false;
             isCrouching = false;
             moveSpeed = startSpeed;

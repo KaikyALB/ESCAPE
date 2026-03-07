@@ -4,54 +4,41 @@ using UnityEngine;
 
 public class Opponent : MonoBehaviour
 {
+    public Player player;
     public enum state {Unaware, Warned, Spotted};
     
     private Collider viewCollider;
+    private Animator anim;
+    private Rigidbody rb;
+    public float moveSpeed;
+    public float sprintSpeedMultiplier;
 
-    public float speed;
-
-    public float walkTimer = 0f;
-    public float walkDuration = 5f;
-
-    public bool startWalk;
     public bool Spotted;
     void Start()
     {
+        rb = GetComponent<Rigidbody>();
         viewCollider = GetComponentInChildren<Collider>();
+        anim = GetComponent<Animator>();
     }
     void Update()
     {
-        switch(state.Unaware)
+
+        if (Spotted)
         {
-            case state.Unaware:
-                startWalk = true;
-                Unaware();
-                break;
-            case state.Warned:
-                Spotted = true;
-                Warned();
-                break;
+            Warned();
+            anim.SetBool("isWalking", true);
         }
-        if(startWalk)
-        {
-            walkTimer = walkDuration;
-        }
-            
+        print(rb.velocity.magnitude);
     }
+    
     public void Unaware()
     {
-        float randomX = Random.Range(0, 200);
-        Vector3 randomMoving = new Vector3(randomX * speed, 0, 0);//Moves the enemy to different directions
-        transform.position += randomMoving;
-        walkTimer -= Time.deltaTime;
-        if(walkTimer < 0)
-        {
-            startWalk = false;
-        }
+
     }
     public void Warned()
     {
-
+        print("Warned State");
+        transform.position = Vector3.MoveTowards(transform.position, player.transform.position, moveSpeed * Time.deltaTime);//Moves towards the target
     }
     private void OnTriggerEnter(Collider other)
     {
