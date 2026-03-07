@@ -36,11 +36,13 @@ public class Opponent : MonoBehaviour
     }
     void Update()
     {
-        Unaware();
-        
-        if(Vector3.Distance(transform.position, walkPosition) < 0.05f)
+        if (!Spotted)
         {
-            //Arrived
+            Unaware();
+            if (Vector3.Distance(transform.position, walkPosition) < 0.05f)
+            {
+                transform.position = walkPosition;
+            }
         }
         switch (currentState)
         {
@@ -84,8 +86,8 @@ public class Opponent : MonoBehaviour
     }
     public void ChooseRandomPos()
     {
-        float randomDistanceX = Random.Range(0, td.size.x);
-        float randomDistanceZ = Random.Range(0, td.size.y);
+        float randomDistanceX = Random.Range(0, td.size.x/4);
+        float randomDistanceZ = Random.Range(0, td.size.y/4);
         Vector3 randomDistance = new Vector3(randomDistanceX, 0, randomDistanceZ);
         walkPosition = transform.position + randomDistance;
     }
