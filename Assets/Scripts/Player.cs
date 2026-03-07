@@ -7,6 +7,7 @@ using UnityEngine.UIElements;
 public class Player : MonoBehaviour
 {
     public Opponent opp;
+    Transform camera;
 
     private Rigidbody rb;
     private Animator anim;
@@ -25,12 +26,16 @@ public class Player : MonoBehaviour
     public bool isCrouching;
     public bool crouched;
 
+    public float mouseSense = 5f;
+    private float lookRotation = 0f;
     public List<Vector3> lastPosition = new List<Vector3>();
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
         col = GetComponent<CapsuleCollider>();
+        camera = Camera.main.transform;
+       // Cursor.lockState = CursorLockMode.Locked;
         moveSpeed = startSpeed;
         standingHeight = 0.78f;
     }
@@ -44,6 +49,7 @@ public class Player : MonoBehaviour
         {
             lastPosition.Clear();
         }
+        MouseLook();
     }
     public void Movement()
     {
@@ -100,5 +106,16 @@ public class Player : MonoBehaviour
                 standReady = false;
             }
         }*/
+    }
+    void MouseLook()
+    {
+        float mouseX = Input.GetAxis("Mouse X") * mouseSense;
+        float mouseY = Input.GetAxis("Mouse Y") * mouseSense;
+
+        lookRotation -= mouseY;
+        lookRotation = Mathf.Clamp(lookRotation, -85, 85);
+
+        camera.localRotation = Quaternion.Euler(lookRotation, 0, 0);
+        transform.Rotate(Vector3.up * mouseX);
     }
 }
