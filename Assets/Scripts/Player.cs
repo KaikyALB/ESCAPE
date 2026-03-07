@@ -6,6 +6,8 @@ using UnityEngine.UIElements;
 
 public class Player : MonoBehaviour
 {
+    public Opponent opp;
+
     private Rigidbody rb;
     private Animator anim;
     public CapsuleCollider col;
@@ -22,7 +24,8 @@ public class Player : MonoBehaviour
 
     public bool isCrouching;
     public bool crouched;
-    
+
+    public List<Vector3> lastPosition = new List<Vector3>();
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -34,6 +37,13 @@ public class Player : MonoBehaviour
     void Update()
     {
         Movement();
+
+        lastPosition.Add(transform.position);//Stores the last position of the game object
+
+        if (lastPosition.Count > 30)//If list bigger than 30, clears
+        {
+            lastPosition.Clear();
+        }
     }
     public void Movement()
     {

@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Opponent : MonoBehaviour
 {
     public Player player;
-    public enum state {Unaware, Warned, Spotted};
+    public enum state {Unaware, Warned, Pursue};
     
     private Collider viewCollider;
     private Animator anim;
@@ -13,6 +14,9 @@ public class Opponent : MonoBehaviour
     public float moveSpeed;
     public float sprintSpeedMultiplier;
 
+    public int framesAgo = 10;
+    public Vector3 storedPosition;
+    private bool positionStored = false;
     public bool Spotted;
     void Start()
     {
@@ -22,13 +26,21 @@ public class Opponent : MonoBehaviour
     }
     void Update()
     {
-
+       
         if (Spotted)
         {
+            if (!positionStored && player.lastPosition.Count > framesAgo)
+            {
+                storedPosition = player.lastPosition[player.lastPosition.Count - framesAgo];//This stores the latest position on the list
+                positionStored = true;
+            }
             Warned();
-            anim.SetBool("isWalking", true);
         }
-        print(rb.velocity.magnitude);
+        if(Vector3.Distance(transform.position, storedPosition) < 0.01f)
+        {
+            Spotted = false;
+            positionStored = false;
+        }
     }
     
     public void Unaware()
@@ -37,8 +49,7 @@ public class Opponent : MonoBehaviour
     }
     public void Warned()
     {
-        print("Warned State");
-        transform.position = Vector3.MoveTowards(transform.position, player.transform.position, moveSpeed * Time.deltaTime);//Moves towards the target
+        transform.position = Vector3.MoveTowards(transform.position, storedPosition, moveSpeed * Time.deltaTime);//Moves towards the target
     }
     private void OnTriggerEnter(Collider other)
     {
