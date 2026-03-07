@@ -6,14 +6,22 @@ using UnityEngine;
 public class Opponent : MonoBehaviour
 {
     public Player player;
+
+    public TerrainData td;
+
     public enum state {Unaware, Warned, Pursue};
-    
+
+    public state currentState;
+
     private Collider viewCollider;
     private Animator anim;
     private Rigidbody rb;
     public float moveSpeed;
     public float sprintSpeedMultiplier;
 
+    Vector3 walkPosition;
+    public bool walkReached;
+    public bool isUnawared;
     public int framesAgo = 10;
     public Vector3 storedPosition;
     private bool positionStored = false;
@@ -23,10 +31,37 @@ public class Opponent : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         viewCollider = GetComponentInChildren<Collider>();
         anim = GetComponent<Animator>();
+
+        currentState = state.Unaware;
     }
     void Update()
     {
-       
+        Unaware();
+        
+        if(Vector3.Distance(transform.position, walkPosition) < 0.05f)
+        {
+            //Arrived
+        }
+        switch (currentState)
+        {
+            case state.Unaware:
+                InvokeRepeating("ChooseRandomPos", 0f, 15f);
+                break;
+            case state.Warned:
+                Warned();
+                break;
+            case state.Pursue:
+                Pursue();
+                break;
+        }
+        if(isUnawared)
+        {
+            Unaware();
+            if (Vector3.Distance(transform.position, walkPosition) < 0.01f)
+            {
+                walkReached = false;
+            }
+        }
         if (Spotted)
         {
             if (!positionStored && player.lastPosition.Count > framesAgo)
@@ -34,7 +69,7 @@ public class Opponent : MonoBehaviour
                 storedPosition = player.lastPosition[player.lastPosition.Count - framesAgo];//This stores the latest position on the list
                 positionStored = true;
             }
-            Warned();
+            currentState = state.Warned;
         }
         if(Vector3.Distance(transform.position, storedPosition) < 0.01f)
         {
@@ -45,11 +80,22 @@ public class Opponent : MonoBehaviour
     
     public void Unaware()
     {
-
+        transform.position = Vector3.MoveTowards(transform.position, walkPosition, moveSpeed * Time.deltaTime);  
+    }
+    public void ChooseRandomPos()
+    {
+        float randomDistanceX = Random.Range(0, td.size.x);
+        float randomDistanceZ = Random.Range(0, td.size.y);
+        Vector3 randomDistance = new Vector3(randomDistanceX, 0, randomDistanceZ);
+        walkPosition = transform.position + randomDistance;
     }
     public void Warned()
     {
         transform.position = Vector3.MoveTowards(transform.position, storedPosition, moveSpeed * Time.deltaTime);//Moves towards the target
+    }
+    public void Pursue()
+    {
+
     }
     private void OnTriggerEnter(Collider other)
     {

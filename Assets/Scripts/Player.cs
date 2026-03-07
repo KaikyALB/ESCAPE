@@ -7,7 +7,9 @@ using UnityEngine.UIElements;
 public class Player : MonoBehaviour
 {
     public Opponent opp;
-    Transform camera;
+    Transform cam;
+
+    public enum sanity {Afraid, Anxious, Desperate, Chaotic}
 
     private Rigidbody rb;
     private Animator anim;
@@ -34,8 +36,8 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
         col = GetComponent<CapsuleCollider>();
-        camera = Camera.main.transform;
-       // Cursor.lockState = CursorLockMode.Locked;
+        cam = Camera.main.transform;
+        //Cursor.lockState = CursorLockMode.Locked;
         moveSpeed = startSpeed;
         standingHeight = 0.78f;
     }
@@ -115,7 +117,7 @@ public class Player : MonoBehaviour
         lookRotation -= mouseY;
         lookRotation = Mathf.Clamp(lookRotation, -85, 85);
 
-        camera.localRotation = Quaternion.Euler(lookRotation, 0, 0);
+        cam.localRotation = Quaternion.Euler(lookRotation, 0, 0);
         transform.Rotate(Vector3.up * mouseX);
     }
 }

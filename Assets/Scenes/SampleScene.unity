@@ -140,7 +140,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &94213573
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -712,6 +712,7 @@ MonoBehaviour:
   standReady: 0
   isCrouching: 0
   crouched: 0
+  mouseSense: 5
   lastPosition: []
 --- !u!4 &1831424092 stripped
 Transform:
@@ -756,7 +757,6 @@ MonoBehaviour:
   player: {fileID: 1831424090}
   opp: {fileID: 2143957961}
   ghostPrefab: {fileID: 5444981761493141685, guid: 1aacd37ce82c96046ad42f9209193592, type: 3}
-  spawn: 0.05
 --- !u!1001 &2143957957
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -902,8 +902,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1831424090}
+  td: {fileID: 15600000, guid: 6488fa4fb603956448c99df83db59477, type: 2}
   moveSpeed: 5
   sprintSpeedMultiplier: 1
+  walkReached: 0
+  isUnawared: 0
   framesAgo: 10
   storedPosition: {x: 0, y: 0, z: 0}
   Spotted: 0
@@ -919,5 +922,5 @@ SceneRoots:
   - {fileID: 705507995}
   - {fileID: 1628594277}
   - {fileID: 1831424086}
-  - {fileID: 94213576}
   - {fileID: 2143957957}
+  - {fileID: 94213576}
