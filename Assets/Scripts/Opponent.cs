@@ -19,6 +19,9 @@ public class Opponent : MonoBehaviour
     public float moveSpeed;
     public float sprintSpeedMultiplier;
 
+    public float initialWalk = 6f;
+    public float walkTime = 0f;
+
     Vector3 walkPosition;
     public bool walkReached;
     public bool isUnawared;
@@ -33,11 +36,14 @@ public class Opponent : MonoBehaviour
         anim = GetComponent<Animator>();
 
         currentState = state.Unaware;
+
+        walkTime = initialWalk;
     }
     void Update()
     {
         if (!Spotted)
         {
+            walkTime -= Time.deltaTime;
             Unaware();
             if (Vector3.Distance(transform.position, walkPosition) < 0.05f)
             {
@@ -82,7 +88,11 @@ public class Opponent : MonoBehaviour
     
     public void Unaware()
     {
-        transform.position = Vector3.MoveTowards(transform.position, walkPosition, moveSpeed * Time.deltaTime);  
+        if(walkTime <= 0) 
+        {
+        transform.position = Vector3.MoveTowards(transform.position, walkPosition, moveSpeed * Time.deltaTime);
+        }
+        walkTime = initialWalk;
     }
     public void ChooseRandomPos()
     {

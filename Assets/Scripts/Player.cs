@@ -37,7 +37,8 @@ public class Player : MonoBehaviour
         anim = GetComponent<Animator>();
         col = GetComponent<CapsuleCollider>();
         cam = Camera.main.transform;
-        //Cursor.lockState = CursorLockMode.Locked;
+        UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+        UnityEngine.Cursor.visible = false;
         moveSpeed = startSpeed;
         standingHeight = 0.78f;
     }
