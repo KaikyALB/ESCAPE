@@ -28,7 +28,7 @@ public class Player : MonoBehaviour
     public bool isCrouching;
     public bool crouched;
 
-    public float mouseSense = 5f;
+    public float mouseSense = 2f;
     private float lookRotation = 0f;
     public List<Vector3> lastPosition = new List<Vector3>();
     void Start()
