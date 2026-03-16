@@ -27,8 +27,6 @@ public class ItemGrab : MonoBehaviour
     {
         lr.GetComponentInParent<LineRenderer>();
         armCol = GetComponent<Collider>();
-        if (playerCam == null) {playerCam = Camera.main;}
-        if(lr == null) { lr.enabled = false; }
     }
     void Update()
     {
