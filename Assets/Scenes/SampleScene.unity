@@ -176,8 +176,8 @@ MonoBehaviour:
   grabAvailable: 0
   throwAvailable: 0
   throwForce: 30
-  throwingArc: 6
-  lrArc: 40
+  throwingArc: 1
+  lrArc: 10
   lrTimeStep: 0.03
   Maxlr: 50
 --- !u!136 &11430895
@@ -922,7 +922,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1411339462}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 2
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -936,7 +936,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 0
+  m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
