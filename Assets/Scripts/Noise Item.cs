@@ -6,16 +6,21 @@ using UnityEngine;
 public class NoiseItem : MonoBehaviour
 {
     private Rigidbody rb;
-    private Collider col;
-
-    private Collider noiseCol;
+    private SphereCollider col;
 
     public float breakF;
 
-    public Vector3 colliderExpand = new Vector3(15, 15, 15);
+    public float radiusExpand;
     private void Update()
     {
-        noiseCol = GetComponentInChildren<Collider>();
+        if (col.enabled)
+        {
+            col.radius += radiusExpand;
+        }
+        if (col.radius > 3)
+        {
+            Destroy(this.gameObject);
+        }
     }
     private void OnCollisionEnter(Collision collision)
     {
@@ -23,13 +28,11 @@ public class NoiseItem : MonoBehaviour
 
         print(collisionSpeed);
 
-        if (collisionSpeed < breakF)
+        col = GetComponentInChildren<SphereCollider>();
+
+        if (collisionSpeed > breakF)
         {
-            noiseCol.enabled = true;
-            if(noiseCol.enabled)
-            {
-                noiseCol.transform.localScale += colliderExpand;
-            }
+            col.enabled = true;
         }
     }
 }

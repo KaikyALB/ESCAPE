@@ -46,9 +46,16 @@ public class ItemGrab : MonoBehaviour
         }
         if (Input.GetMouseButton(0))
         {
+            Debug.Log("=== MOUSE 0 PRESSED THIS FRAME ===");
+
             if (heldObject != null)
             {
+                Debug.Log("→ HeldObject is NOT null → Will throw: " + heldObject.name);
                 ThrowItem();
+            }
+            else
+            {
+                Debug.Log("→ heldObject is NULL → Should do NOTHING");
             }
         }
         if (isInPickupRange && Input.GetKey(KeyCode.E) && heldObject == null && currentPickupCollider != null)
@@ -125,14 +132,19 @@ public class ItemGrab : MonoBehaviour
 
     void ThrowItem()
     {
+        Debug.Log("=== THROWITEM() WAS CALLED === heldObject was: " + (heldObject != null ? heldObject.name : "NULL"));
         if (heldObject == null) return;
+
         heldObject.transform.SetParent(null);//Removes ther parent making the object able to move
+
         Rigidbody rb = heldObject.GetComponent<Rigidbody>();
         if (rb != null)
         {
             rb.isKinematic = false;
+
             Ray ray = playerCam.ScreenPointToRay(Input.mousePosition);
             Vector3 throwDirection = ray.direction;
+
             rb.AddForce(throwDirection * throwForce + Vector3.up * throwingArc, ForceMode.Impulse);//Throws the object
         }
         Collider col = heldObject.GetComponent<Collider>();
@@ -140,6 +152,7 @@ public class ItemGrab : MonoBehaviour
         {
             col.enabled = true;
         }
+
         heldObject = null;
     }
 
