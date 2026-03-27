@@ -1086,7 +1086,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   breakF: 2
-  radiusExpand: 0.3
+  radiusLimit: 3
+  radiusExpand: 0.05
 --- !u!1 &1628594274
 GameObject:
   m_ObjectHideFlags: 0

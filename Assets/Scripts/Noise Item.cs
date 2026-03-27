@@ -9,15 +9,15 @@ public class NoiseItem : MonoBehaviour
     private SphereCollider col;
 
     public float breakF;
-
+    public float radiusLimit;
     public float radiusExpand;
     private void Update()
     {
         if (col.enabled)
         {
-            col.radius += radiusExpand;
+            col.radius = col.radius + radiusExpand;
         }
-        if (col.radius > 3)
+        if (col.radius <= radiusLimit)
         {
             Destroy(this.gameObject);
         }
