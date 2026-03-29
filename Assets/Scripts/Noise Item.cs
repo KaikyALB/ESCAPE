@@ -11,16 +11,20 @@ public class NoiseItem : MonoBehaviour
     public float breakF;
     public float radiusLimit;
     public float radiusExpand;
+    private void Start()
+    {
+        col.enabled = false;
+    }
     private void Update()
     {
-        if (col.enabled)
+        /*if (col.enabled)
         {
             col.radius = col.radius + radiusExpand;
         }
         if (col.radius <= radiusLimit)
         {
             Destroy(this.gameObject);
-        }
+        }*/
     }
     private void OnCollisionEnter(Collision collision)
     {

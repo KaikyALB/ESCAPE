@@ -10,7 +10,11 @@ public class PreadatorHearing : MonoBehaviour
     {
         if(other.tag == "Noise Object")
         {
-            opp.transform.position = Vector3.MoveTowards(item.transform.position, item.transform.position, item.transform.position.z);
+            opp.transform.position = Vector3.MoveTowards(item.transform.position, opp.walkPosition, opp.moveSpeed * Time.deltaTime);
+            if(item.transform.position.y < 0 || item.transform.position.y > 0)
+            {
+                opp.transform.position = new Vector3(opp.transform.position.x, 0, opp.transform.position.z);
+            }
         }
     }
 }

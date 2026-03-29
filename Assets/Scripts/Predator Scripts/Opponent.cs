@@ -22,7 +22,7 @@ public class Opponent : MonoBehaviour
     public float initialWalk = 6f;
     public float walkTime = 0f;
 
-    Vector3 walkPosition;
+    public Vector3 walkPosition;
     public bool walkReached;
     public bool isUnawared;
     public int framesAgo = 10;
