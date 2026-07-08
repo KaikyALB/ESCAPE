@@ -6,7 +6,7 @@ using UnityEngine;
 public class NoiseItem : MonoBehaviour
 {
     private Rigidbody rb;
-    private SphereCollider col;
+    public SphereCollider col;
 
     public float breakF;
     public float radiusLimit;
@@ -17,14 +17,6 @@ public class NoiseItem : MonoBehaviour
     }
     private void Update()
     {
-        /*if (col.enabled)
-        {
-            col.radius = col.radius + radiusExpand;
-        }
-        if (col.radius <= radiusLimit)
-        {
-            Destroy(this.gameObject);
-        }*/
     }
     private void OnCollisionEnter(Collision collision)
     {

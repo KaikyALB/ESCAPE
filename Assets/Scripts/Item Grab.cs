@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -32,6 +32,9 @@ public class ItemGrab : MonoBehaviour
         {
             playerCam = Camera.main;
         }
+
+        // Clear any Inspector pre-assignment — heldObject must only be set through GrabItem().
+        heldObject = null;
     }
 
     void Update()
@@ -44,21 +47,19 @@ public class ItemGrab : MonoBehaviour
         {
             lr.enabled = false;
         }
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButtonDown(0))
         {
-            Debug.Log("=== MOUSE 0 PRESSED THIS FRAME ===");
 
             if (heldObject != null)
             {
-                Debug.Log("→ HeldObject is NOT null → Will throw: " + heldObject.name);
                 ThrowItem();
             }
             else
             {
-                Debug.Log("→ heldObject is NULL → Should do NOTHING");
+
             }
         }
-        if (isInPickupRange && Input.GetKey(KeyCode.E) && heldObject == null && currentPickupCollider != null)
+        if (isInPickupRange && Input.GetKeyDown(KeyCode.E) && heldObject == null && currentPickupCollider != null)
         {
             GrabItem(currentPickupCollider);
         }
@@ -92,8 +93,6 @@ public class ItemGrab : MonoBehaviour
         grabAvailable = false;
         isInPickupRange = false;
         currentPickupCollider = null;
-
-        Debug.Log("Grabbed: " + heldObject.name);
     }
     private void UpdateTrajectory()
     {
@@ -132,7 +131,6 @@ public class ItemGrab : MonoBehaviour
 
     void ThrowItem()
     {
-        Debug.Log("=== THROWITEM() WAS CALLED === heldObject was: " + (heldObject != null ? heldObject.name : "NULL"));
         if (heldObject == null) return;
 
         heldObject.transform.SetParent(null);//Removes ther parent making the object able to move
@@ -168,13 +166,11 @@ public class ItemGrab : MonoBehaviour
             grabAvailable = true;
             isInPickupRange = true;
             currentPickupCollider = other;  // remember which one
-            Debug.Log("Entered range - hold E to grab");
         }
     }
 
     private void OnTriggerStay(Collider other)
     {
-        // Optional: keep prompt alive if needed, but no pickup logic here
         if (other.CompareTag("Noise Object") && heldObject == null)
         {
             grabText.SetActive(true);
@@ -192,7 +188,6 @@ public class ItemGrab : MonoBehaviour
             grabAvailable = false;
             isInPickupRange = false;
             currentPickupCollider = null;
-            Debug.Log("Exited range");
         }
     }
 }

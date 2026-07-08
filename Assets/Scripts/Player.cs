@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     private Rigidbody rb;
     private Animator anim;
     public CapsuleCollider col;
+    public float movementAcc;
     public float startSpeed;
     public float moveSpeed;
     public float crouchSpeed;
@@ -41,6 +42,9 @@ public class Player : MonoBehaviour
         UnityEngine.Cursor.visible = false;
         moveSpeed = startSpeed;
         standingHeight = 0.78f;
+
+        // Root motion moves the character via animation data, conflicting with manual Translate-based movement.
+        anim.applyRootMotion = false;
     }
     void Update()
     {
@@ -56,8 +60,10 @@ public class Player : MonoBehaviour
     }
     public void Movement()
     {
-        //Sets the movement
-        Vector3 movement = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
+        // Clear any velocity the physics engine accumulated from previous transform.Translate calls.
+        rb.velocity = Vector3.zero;
+
+        Vector3 movement = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical"));
         //Speed to move and Space.World stops the rotation of the player from affecting the world
         transform.Translate(movement * moveSpeed * Time.deltaTime);
         anim.SetBool("isWalking", movement.magnitude > 0.01f);
@@ -99,16 +105,6 @@ public class Player : MonoBehaviour
             isCrouching = false;
             moveSpeed = startSpeed;
         }
-        /*if(!crouched & standReady)
-        {
-            anim.SetBool("crouchToStand", true);
-            crouchToStandTimer -= Time.deltaTime;
-            if(crouchToStandTimer < 0)
-            {
-                anim.SetBool("crouchToStand", false);
-                standReady = false;
-            }
-        }*/
     }
     void MouseLook()
     {
