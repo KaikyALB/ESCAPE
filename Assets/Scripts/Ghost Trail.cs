@@ -9,6 +9,15 @@ public class GhostTrail : MonoBehaviour
     public GameObject ghostPrefab;
 
     public float ghostAmount = 0;
+
+    public float ghostTimer = 0;
+    public float ghostDuration = 0.8f;
+
+    public bool ghostActive = false;
+    private void Start()
+    {
+        ghostTimer = ghostDuration;
+    }
     private void Update()
     {
         if (opp.Spotted)
@@ -18,6 +27,21 @@ public class GhostTrail : MonoBehaviour
             {
                 CancelInvoke("ghostSpawn");
             }
+            ghostActive = true;
+        }
+        if(ghostActive)
+        {
+            ghostTimer -= Time.deltaTime;
+        }
+        else if(!ghostActive)
+        {
+            ghostTimer = ghostDuration;
+        }
+        if(ghostTimer <= 0)
+        {
+            Destroy(ghostPrefab);
+
+            ghostActive = false;
         }
     }
 
