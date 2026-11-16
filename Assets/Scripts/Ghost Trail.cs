@@ -27,7 +27,6 @@ public class GhostTrail : MonoBehaviour
             {
                 CancelInvoke("ghostSpawn");
             }
-            ghostActive = true;
         }
         if(ghostActive)
         {

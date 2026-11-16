@@ -6,7 +6,7 @@ public class Opponent : MonoBehaviour
 {
     public Player player;
     public TerrainData td;
-
+    public GhostTrail gt;
     public enum State { Unaware, Warned, Pursue }
     public State currentState;
 
